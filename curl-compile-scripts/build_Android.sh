@@ -1,6 +1,6 @@
 #!/bin/bash
 #Change this env variable to the number of processors you have
-TARGET=android-8
+TARGET=android-9
 
 if [ -f /proc/cpuinfo ]; then
   JOBS=$(grep flags /proc/cpuinfo |wc -l)
@@ -22,7 +22,7 @@ fi
 
 #Configure OpenSSL
 cd $SSLPATH
-./Configure android no-asm no-shared no-cast no-idea no-camellia no-whirpool
+./Configure android no-engine no-gost no-asm no-shared no-cast no-idea no-camellia no-whirpool
 EXITCODE=$?
 if [ $EXITCODE -ne 0 ]; then
 	echo "Error running the ssl configure program"
@@ -105,7 +105,7 @@ if [ $EXITCODE -ne 0 ]; then
 fi
 
 #Strip debug symbols and copy to the prebuilt folder
-PLATFORMS=(arm64-v8a x86_64 mips64 armeabi armeabi-v7a x86 mips)
+PLATFORMS=(arm64-v8a)
 DESTDIR=$SCRIPTPATH/../prebuilt-with-ssl/android
 
 for p in ${PLATFORMS[*]}; do 
